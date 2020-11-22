@@ -1,0 +1,13 @@
+/**
+ *  created by  : #AUTHOR#
+ *  date        : #CREATIONDATE#
+ *  description :
+ **/
+
+namespace #NAMESPACE#
+{
+    public class #SCRIPTNAME#
+    {
+        #NOTRIM#
+    }
+}
