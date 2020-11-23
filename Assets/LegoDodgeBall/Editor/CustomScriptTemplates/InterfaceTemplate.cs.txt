@@ -1,0 +1,17 @@
+/**
+ *  created by  : #AUTHOR#
+ *  date        : #CREATIONDATE#
+ *  description :
+ **/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace #NAMESPACE#
+{
+    public interface #SCRIPTNAME#
+    {
+        #NOTRIM#
+    }
+}
