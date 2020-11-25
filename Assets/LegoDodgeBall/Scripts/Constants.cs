@@ -13,5 +13,8 @@ namespace LegoDodgeBall
         public const string LEGO_STRUCTURES_PATH = LEGO_PREFAB_MODELS_PATH + "/Stone Structures/";
 
         public const string LEGO_PLATFORM_PATH = LEGO_STRUCTURES_PATH + "Platform.prefab";
+
+        public const string PREFAB_PATH = "Assets/LegoDodgeBall/Prefabs/";
+        public const string PREFAB_PICKUP_PATH = PREFAB_PATH + "Pickup.prefab";
     }
 }
