@@ -31164,6 +31164,8 @@ GameObject:
   - component: {fileID: 4448332309811654116}
   - component: {fileID: 5796788530917210049}
   - component: {fileID: 7641747881794111494}
+  - component: {fileID: 4630383579477934707}
+  - component: {fileID: 4630383579477934706}
   m_Layer: 0
   m_Name: 59900
   m_TagString: Untagged
@@ -31171,6 +31173,58 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4630383579477934706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630383579477934705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41201d038bb64223af991ea71db42e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scope: 1
+  m_IconPath: Assets/LEGO/Gizmos/LEGO Behaviour Icons/Win Action.png
+  m_FlashColour: {r: 0.6901961, g: 1.3411765, b: 0.50980395, a: 2}
+  m_Brick: {fileID: 5586018174515765759}
+  m_BrickPivotOffset: {x: -0.000000029803097, y: 0.56873167, z: 0.000000014901161}
+  m_Audio: {fileID: 8300000, guid: fa48be10d21504b7a88460b3312e6e08, type: 3}
+  m_AudioVolume: 1
+  m_ObjectiveConfigurations:
+  - Title: Collect all the Pickups
+    Description: Go get 'em!
+    ProgressType: 1
+    Lose: 0
+    Hidden: 0
+  m_Triggers:
+  - {fileID: 4630383579477934707}
+--- !u!114 &4630383579477934707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630383579477934705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33190620517f046d6b5b17697a8a471b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scope: 1
+  m_IconPath: Assets/LEGO/Gizmos/LEGO Behaviour Icons/Pickup Trigger.png
+  m_FlashColour: {r: 1.6, g: 1.4509804, b: 1.1058824, a: 2}
+  m_Brick: {fileID: 5586018174515765759}
+  m_BrickPivotOffset: {x: -0.000000029803097, y: 0.56873167, z: 0.000000014901161}
+  Progress: 0
+  Goal: 0
+  m_Target: 0
+  m_SpecificTargetActions: []
+  m_Repeat: 1
+  m_Mode: 1
+  m_AmountModeCount: 3
+  m_SpecificModePickupActions: []
 --- !u!4 &4854809171213193917
 Transform:
   m_ObjectHideFlags: 1
@@ -31678,7 +31732,6 @@ GameObject:
   - component: {fileID: 3305164129827666802}
   - component: {fileID: 1365056453450713125}
   - component: {fileID: 4332844091524018616}
-  - component: {fileID: 7682213322144068456}
   - component: {fileID: 7682213322144068455}
   m_Layer: 0
   m_Name: PickupManager
@@ -31701,31 +31754,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pickUpPrefab: {fileID: 7577179433784191648, guid: ef72e94e1dba7c243981f0b1c860441a,
     type: 3}
---- !u!114 &7682213322144068456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7682213322144068454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33190620517f046d6b5b17697a8a471b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Scope: 1
-  m_IconPath: Assets/LEGO/Gizmos/LEGO Behaviour Icons/Pickup Trigger.png
-  m_FlashColour: {r: 1.6, g: 1.4509804, b: 1.1058824, a: 2}
-  m_Brick: {fileID: 0}
-  m_BrickPivotOffset: {x: 0, y: 0, z: 0}
-  Progress: 0
-  Goal: 0
-  m_Target: 1
-  m_SpecificTargetActions: []
-  m_Repeat: 1
-  m_Mode: 2
-  m_AmountModeCount: 1
-  m_SpecificModePickupActions: []
 --- !u!65 &7700949154268325525
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ using Unity.LEGO.Behaviours.Triggers;
 
 namespace LegoDodgeBall
 {
-    [RequireComponent(typeof(PickupTrigger))]
+    // [RequireComponent(typeof(PickupTrigger))]
     public class PickupRespawnManager : MonoBehaviour
     {
 
@@ -29,7 +29,7 @@ namespace LegoDodgeBall
 
         void Awake()
         {
-            m_pickUpTrigger = this.GetComponent<PickupTrigger>();
+            m_pickUpTrigger = this.GetComponentInChildren<PickupTrigger>();
         }
 
         void Start()
@@ -54,6 +54,11 @@ namespace LegoDodgeBall
 
         void PickupCollected(PickupAction pickup)
         {
+            if (m_pickUpTrigger)
+            {
+                m_pickUpTrigger.Progress++;
+            }
+
             pickup.OnCollected -= this.PickupCollected;
             StartCoroutine(this.Respawn(pickup, 2));
         }
