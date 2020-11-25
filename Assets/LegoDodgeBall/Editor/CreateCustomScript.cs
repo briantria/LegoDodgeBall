@@ -14,7 +14,7 @@ public class CreateCustomScript
     #region Paths
 
     private const string kMenuHierarchy = "Assets/Create/Custom Script/";
-    private const string kScriptTemplateFolder = "Assets/Editor/CustomScriptTemplates/";
+    private const string kScriptTemplateFolder = "Assets/LegoDodgeBall/Editor/CustomScriptTemplates/";
 
     #endregion
 
