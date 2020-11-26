@@ -3005,9 +3005,8 @@ MonoBehaviour:
   m_Brick: {fileID: 2116231227432141364}
   m_BrickPivotOffset: {x: 0.004409108, y: 0.80354846, z: -0.08621155}
   m_Audio: {fileID: 8300000, guid: b3ab0c3a572c344949d3fd0c592c634c, type: 3}
-  m_AudioVolume: 0.5
-  m_Effect: {fileID: 6495044552919392668, guid: b096279cf46d9461fb5f199c8d5fde6e,
-    type: 3}
+  m_AudioVolume: 1
+  m_Effect: {fileID: 0}
 --- !u!1 &5001875809666743745
 GameObject:
   m_ObjectHideFlags: 0
