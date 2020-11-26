@@ -12,45 +12,81 @@ using Unity.LEGO.Behaviours.Triggers;
 
 namespace LegoDodgeBall
 {
-    // [RequireComponent(typeof(PickupTrigger))]
     public class PickupRespawnManager : MonoBehaviour
     {
+        [SerializeField] private Transform m_pickUpSpawnPoint;
+        [SerializeField] private GameObject m_pickUpPrefab;
 
-        [SerializeField, Tooltip("Pickup Prefab")]
-        private GameObject m_pickUpPrefab;
-        private GameObject m_pickupInstance;
-
+        // private List<GameObject> m_pickupInstanceList = new List<GameObject>();
+        private List<Transform> m_activePickUpSpawnPoints = new List<Transform>();
+        private List<Transform> m_inactivePickUpSpawnPoints = new List<Transform>();
         private PickupTrigger m_pickUpTrigger;
-
-        // TODO: set max pickup Goal = 9999999;
-        // TODO: programatically spawn pickup and add listener
-        // TODO: update progress onCollect
-        // TODO: spawn / activate another pickup onCollect
 
         void Awake()
         {
             m_pickUpTrigger = this.GetComponentInChildren<PickupTrigger>();
+            this.LoadPickUpSpawnPoints();
         }
 
         void Start()
         {
-            this.SpawnPickup();
+            //this.SpawnPickup();
         }
 
-        private void SpawnPickup()
-        {
-            m_pickupInstance = GameObject.Instantiate<GameObject>(m_pickUpPrefab);
-            m_pickupInstance.name = "PickUp - " + System.DateTime.Now.ToString("yyyyMMddHHmmss");
-            m_pickupInstance.transform.localPosition = this.transform.position + Vector3.up * 2;
-            m_pickupInstance.transform.localScale = Vector3.one;
+        #region Private Functions
 
-            PickupAction pa = m_pickupInstance.GetComponentInChildren<PickupAction>();
-            if (pa != null)
+        private void SpawnPickup(Vector3 spawnPoint)
+        {
+            GameObject pickupInstance = Instantiate<GameObject>(m_pickUpPrefab);
+            pickupInstance.name = "PickUp - " + System.DateTime.Now.ToString("yyyyMMddHHmmss");
+            pickupInstance.transform.position = spawnPoint;
+            pickupInstance.transform.localScale = Vector3.one;
+
+            // m_pickupInstanceList.Add(pickupInstance);
+            PickupAction pickupAction = pickupInstance.GetComponentInChildren<PickupAction>();
+
+            if (pickupAction != null)
             {
                 //Debug.Log("pickup action found!");
-                pa.OnCollected += this.PickupCollected;
+
+                pickupAction.OnCollected += this.PickupCollected;
             }
         }
+
+        private bool GetRandomSpawnPoint(ref Vector3 spawnPoint)
+        {
+            if (m_inactivePickUpSpawnPoints != null || m_inactivePickUpSpawnPoints.Count == 0)
+            {
+                // no available spawnpoint
+                return false;
+            }
+
+            return true;
+        }
+
+        private void LoadPickUpSpawnPoints()
+        {
+            if (!m_pickUpSpawnPoint)
+            {
+                Debug.LogError("Missing spawnpoints...");
+                return;
+            }
+
+            // m_activePickUpSpawnPoints = new List<Transform>();
+            // m_inactivePickUpSpawnPoints = new List<Transform>();
+
+            foreach (Transform spawnPoint in m_pickUpSpawnPoint)
+            {
+                if (spawnPoint.tag == "PickUpSpawnPoint")
+                {
+                    // m_inactivePickUpSpawnPoints.Add(spawnPoint);
+                    Debug.Log("spawn...");
+                    this.SpawnPickup(spawnPoint.position);
+                }
+            }
+        }
+
+        #endregion
 
         void PickupCollected(PickupAction pickup)
         {
@@ -65,16 +101,12 @@ namespace LegoDodgeBall
 
         public IEnumerator Respawn(PickupAction pickup, float t)
         {
-            //Debug.Log("RESPAWN in 2 seconds...");
+            GameObject pickupGameObject = pickup.transform.parent.gameObject;
+            Vector3 spawnPoint = pickupGameObject.transform.position;
+            //Destroy(pickupGameObject);
+
             yield return new WaitForSeconds(t);
-
-            if (m_pickupInstance)
-            {
-                Destroy(m_pickupInstance);
-            }
-
-            //Debug.Log("RESPAWN!");
-            this.SpawnPickup();
+            this.SpawnPickup(spawnPoint);
         }
     }
 }
