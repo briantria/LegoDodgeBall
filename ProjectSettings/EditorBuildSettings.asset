@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/LegoDodgeBall/Scene/MainMenu.unity
+    guid: ca30a6eb7af050e4b8b325828dc0fdce
+  - enabled: 1
     path: Assets/LegoDodgeBall/Scene/Arena.unity
     guid: 4b0303e96857a2f45b8a61fcfb8622e8
   m_configObjects: {}
