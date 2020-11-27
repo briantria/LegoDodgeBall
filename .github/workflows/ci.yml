@@ -35,14 +35,18 @@ jobs:
           key: Library
 
       # Test
-      - name: Run tests
-        uses: webbertakken/unity-test-runner@v1.7
-        with:
-          unityVersion: 2019.2.11f1
+#       - name: Run tests
+#         uses: webbertakken/unity-test-runner@v1.7
+#         env:
+#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
+#         with:
+#           unityVersion: 2019.2.11f1
 
       # Build
       - name: Build project
-        uses: webbertakken/unity-builder@v0.10
+        uses: webbertakken/unity-builder@v1.5
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2019 }}
         with:
           unityVersion: 2019.2.11f1
           targetPlatform: WebGL
