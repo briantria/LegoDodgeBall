@@ -1,7 +1,7 @@
 # source: https://unity-ci.com/docs/github/activation
 
 name: Acquire activation file
-  on: [push]
+on: [push]
 
 jobs:
   activation:
