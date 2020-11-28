@@ -75,7 +75,7 @@ namespace LegoDodgeBall
                 if (spawnPoint.tag == "PickUpSpawnPoint")
                 {
                     // m_inactivePickUpSpawnPoints.Add(spawnPoint);
-                    Debug.Log("spawn...");
+                    // Debug.Log("spawn...");
                     this.SpawnPickup(spawnPoint.position);
                 }
             }
