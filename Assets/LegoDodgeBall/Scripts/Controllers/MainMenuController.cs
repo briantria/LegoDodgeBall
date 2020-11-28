@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace LegoDodgeBall
 {
-    public class MainMenucontroller : MonoBehaviour
+    public class MainMenuController : MonoBehaviour
     {
         [SerializeField] private IntVariable m_gameMode;
 
