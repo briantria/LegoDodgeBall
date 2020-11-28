@@ -781,6 +781,7 @@ GameObject:
   - component: {fileID: 4365628446054866099}
   - component: {fileID: 1316509950054786350}
   - component: {fileID: 4969933560670824433}
+  - component: {fileID: -2983721565619103476}
   m_Layer: 0
   m_Name: Win - Dodge Team
   m_TagString: Untagged
@@ -886,8 +887,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4bf3e5325f3e0b43882117931f7a1bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_pickUpSpawnPoint: {fileID: 0}
   m_pickUpPrefab: {fileID: 7577179433784191648, guid: ef72e94e1dba7c243981f0b1c860441a,
     type: 3}
+--- !u!114 &-2983721565619103476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969933560670824432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1b3a3c6fe1ea64380fe173c2891f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gameMode: {fileID: 11400000, guid: 625c61a146349a04f8fb1667d6aa7525, type: 2}
+  m_gameModeFlag: 0
+  m_gameModePosition: []
 --- !u!1 &5395486212480727354
 GameObject:
   m_ObjectHideFlags: 0

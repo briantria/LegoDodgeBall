@@ -12,7 +12,7 @@ using Unity.LEGO.Behaviours.Triggers;
 
 namespace LegoDodgeBall
 {
-    public class PickupRespawnManager : MonoBehaviour
+    public class PickupRespawnController : MonoBehaviour
     {
         [SerializeField] private Transform m_pickUpSpawnPoint;
         [SerializeField] private GameObject m_pickUpPrefab;
@@ -22,15 +22,10 @@ namespace LegoDodgeBall
         private List<Transform> m_inactivePickUpSpawnPoints = new List<Transform>();
         private PickupTrigger m_pickUpTrigger;
 
-        void Awake()
+        void Start()
         {
             m_pickUpTrigger = this.GetComponentInChildren<PickupTrigger>();
             this.LoadPickUpSpawnPoints();
-        }
-
-        void Start()
-        {
-            //this.SpawnPickup();
         }
 
         #region Private Functions
@@ -80,7 +75,7 @@ namespace LegoDodgeBall
                 if (spawnPoint.tag == "PickUpSpawnPoint")
                 {
                     // m_inactivePickUpSpawnPoints.Add(spawnPoint);
-                    Debug.Log("spawn...");
+                    // Debug.Log("spawn...");
                     this.SpawnPickup(spawnPoint.position);
                 }
             }
