@@ -6,17 +6,21 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewIntVariable", menuName = "ScriptableObject/Variables/Int", order = 51)]
-public class IntVariable : ScriptableObject
+
+namespace LegoDodgeBall
 {
-    #region Properties
-    public int InitValue;
-
-    [NonSerialized] public int RuntimeValue;
-    #endregion
-
-    public void OnAfterDeserialize()
+    [CreateAssetMenu(fileName = "NewIntVariable", menuName = "ScriptableObject/Variables/Int", order = 51)]
+    public class IntVariable : ScriptableObject
     {
-        RuntimeValue = InitValue;
+        #region Properties
+        public int InitValue;
+
+        [NonSerialized] public int RuntimeValue;
+        #endregion
+
+        public void OnAfterDeserialize()
+        {
+            RuntimeValue = InitValue;
+        }
     }
 }
