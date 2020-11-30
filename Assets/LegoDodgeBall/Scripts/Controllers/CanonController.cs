@@ -32,6 +32,7 @@ namespace LegoDodgeBall
             base.Start();
             m_previousMousePosition = Input.mousePosition;
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void FixedUpdate()
@@ -55,6 +56,7 @@ namespace LegoDodgeBall
         {
             base.OnDestroy();
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             EventManager.RemoveListener<OptionsMenuEvent>(OnOptionsMenu);
             EventManager.RemoveListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
         }
@@ -88,6 +90,15 @@ namespace LegoDodgeBall
         void OnOptionsMenu(OptionsMenuEvent evt)
         {
             Cursor.visible = evt.Active;
+
+            if (evt.Active)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
 
         #endregion
