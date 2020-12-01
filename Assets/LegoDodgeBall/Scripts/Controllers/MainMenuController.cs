@@ -17,12 +17,12 @@ namespace LegoDodgeBall
 
         public void PlayDodger()
         {
-            m_gameMode.RuntimeValue = 0;
+            m_gameMode.InitValue = 0;
         }
 
         public void PlayThrower()
         {
-            m_gameMode.RuntimeValue = 1;
+            m_gameMode.InitValue = 1;
         }
     }
 }

@@ -24,13 +24,14 @@ namespace LegoDodgeBall
                 return;
             }
 
-            switch (m_gameMode.RuntimeValue)
+            switch (m_gameMode.InitValue)
             {
                 case (int)GameMode.Dodger:
                     this.LoadPositionFromList(m_dodgerSpawnPoints);
                     break;
 
                 default:
+                    //this.GetComponent<CharacterController>().enabled = false;
                     this.LoadPositionFromList(m_throwerSpawnPoints);
                     break;
             }

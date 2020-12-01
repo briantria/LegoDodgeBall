@@ -17,7 +17,7 @@ namespace LegoDodgeBall
 
         protected void Awake()
         {
-            this.gameObject.SetActive(m_currentGameMode.RuntimeValue == (int)m_gameMode);
+            this.gameObject.SetActive(m_currentGameMode.InitValue == (int)m_gameMode);
         }
     }
 }
