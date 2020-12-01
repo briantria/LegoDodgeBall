@@ -18,22 +18,17 @@ namespace LegoDodgeBall
     {
         [SerializeField] private GameMode m_gameMode;
 
-        private CinemachineFreeLook m_FreeLookCamera;
-        private Vector3 m_previousLookDirection;
+        private float m_sensitivity = 1.0f;
 
         override protected void Awake()
         {
             base.Awake();
-            m_FreeLookCamera = FindObjectOfType<CinemachineFreeLook>();
-            EventManager.AddListener<OptionsMenuEvent>(OnOptionsMenu);
+            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
         }
 
         override protected void Start()
         {
             base.Start();
-            m_previousLookDirection = this.transform.position - m_FreeLookCamera.transform.position;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void FixedUpdate()
@@ -54,58 +49,19 @@ namespace LegoDodgeBall
         override protected void OnDestroy()
         {
             base.OnDestroy();
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            EventManager.RemoveListener<OptionsMenuEvent>(OnOptionsMenu);
+            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
         }
 
         private void MouseLookAt()
         {
-            if (!m_FreeLookCamera)
-            {
-                return;
-            }
-
-            // Math.Atan2(b.Y - a.Y,b.X - a.X);
-            Vector3 currentLookDirection = this.transform.position - m_FreeLookCamera.transform.position;
-            double deltaAxisAngleY = Math.Atan2(currentLookDirection.z - m_previousLookDirection.z, currentLookDirection.x - m_previousLookDirection.x);
-            m_previousLookDirection = currentLookDirection;
-            Debug.Log("delta: " + deltaAxisAngleY);
-
-            // Vector3 lookAtPoint = (this.transform.position - m_FreeLookCamera.transform.position) * 20;
-            // lookAtPoint.y = this.transform.position.y;
-            // m_Group.transform.LookAt(lookAtPoint); //, m_FreeLookCamera.transform.up);
-
-
-            // Vector3 deltaMousePosition = (Input.mousePosition - m_previousMousePosition) * m_lookSensitivity * Time.deltaTime;
-            // m_previousMousePosition = Input.mousePosition;
-
-            // // Rotate bricks.
-            // // var delta = Mathf.Clamp(m_Angle / m_Time * m_CurrentTime, Mathf.Min(-m_Angle, m_Angle), Mathf.Max(-m_Angle, m_Angle)) - m_Offset;
-            float delta = (float)deltaAxisAngleY;
-            // var delta = deltaMousePosition.x;
-            var worldPivot = transform.position + transform.TransformVector(m_BrickPivotOffset);
-            m_Group.transform.RotateAround(worldPivot, transform.up, delta);
-            //m_Offset += delta;
-
-            // Update model position.
             m_MovementTracker.UpdateModelPosition();
         }
 
         #region Broadcast Events
 
-        void OnOptionsMenu(OptionsMenuEvent evt)
+        void OnLookSensitivityUpdate(LookSensitivityUpdateEvent evt)
         {
-            Cursor.visible = evt.Active;
-
-            if (evt.Active)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            m_sensitivity = evt.Value;
         }
 
         #endregion

@@ -51,6 +51,7 @@ namespace LegoDodgeBall
 
         protected void OnDestroy()
         {
+            this.ShowCursor(true);
             EventManager.RemoveListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
             EventManager.RemoveListener<OptionsMenuEvent>(OnOptionsMenu);
         }
@@ -59,18 +60,10 @@ namespace LegoDodgeBall
         {
             float rotationX = m_chosenSpawnPoint.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity * 0.5f;
             m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity * 0.25f;
-            /*
-            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-            */
 
             m_chosenSpawnPoint.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
             //m_mainCamera.transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
         }
-
-        // protected void LateUpdate()
-        // {
-        //     this.SetupCameraPosition();
-        // }
 
         #region Private Functions
 
