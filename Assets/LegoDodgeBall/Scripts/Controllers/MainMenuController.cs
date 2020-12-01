@@ -13,16 +13,18 @@ namespace LegoDodgeBall
 {
     public class MainMenuController : MonoBehaviour
     {
-        [SerializeField] private IntVariable m_gameMode;
+        [SerializeField] private GameMode m_gameMode;
 
         public void PlayDodger()
         {
-            m_gameMode.InitValue = 0;
+            m_gameMode.CurrentGameMode = GameModeFlag.Dodger;
+            // TODO pickup goal and timelimit
         }
 
         public void PlayThrower()
         {
-            m_gameMode.InitValue = 1;
+            m_gameMode.CurrentGameMode = GameModeFlag.Thrower;
+            // TODO pickup goal and timelimit
         }
     }
 }

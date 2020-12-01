@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df23bfc3330a1374f9c2d6a3d1b2e5b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 05f84711234482149bf4dcff41ef5e8f, type: 3}
   m_Name: GameMode
   m_EditorClassIdentifier: 
-  InitValue: 1
+  CurrentGameMode: 1
+  PickupGoal: 100
+  TimeLimit: 120

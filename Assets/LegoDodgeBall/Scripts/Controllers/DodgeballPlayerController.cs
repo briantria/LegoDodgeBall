@@ -12,7 +12,7 @@ namespace LegoDodgeBall
 {
     public class DodgeballPlayerController : MonoBehaviour
     {
-        [SerializeField] private IntVariable m_gameMode;
+        [SerializeField] private GameMode m_gameMode;
         [SerializeField] private List<Transform> m_throwerSpawnPoints;
         [SerializeField] private List<Transform> m_dodgerSpawnPoints;
 
@@ -24,9 +24,9 @@ namespace LegoDodgeBall
                 return;
             }
 
-            switch (m_gameMode.InitValue)
+            switch (m_gameMode.CurrentGameMode)
             {
-                case (int)GameMode.Dodger:
+                case GameModeFlag.Dodger:
                     this.LoadPositionFromList(m_dodgerSpawnPoints);
                     break;
 

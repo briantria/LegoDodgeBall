@@ -12,12 +12,28 @@ namespace LegoDodgeBall
 {
     public class GameModeController : MonoBehaviour
     {
-        [SerializeField] private IntVariable m_currentGameMode;
         [SerializeField] private GameMode m_gameMode;
+        // [SerializeField] private GameModeFlag m_gameMode;
+
+        [Space(5)]
+        [SerializeField] private List<GameObject> m_dodgerGameModeRules = new List<GameObject>();
+
+        [Space(5)]
+        [SerializeField] private List<GameObject> m_throwerGameModeRules = new List<GameObject>();
 
         protected void Awake()
         {
-            this.gameObject.SetActive(m_currentGameMode.InitValue == (int)m_gameMode);
+            //this.gameObject.SetActive(m_currentGameMode.InitValue == (int)m_gameMode);
+
+            foreach (GameObject obj in m_dodgerGameModeRules)
+            {
+                obj.SetActive(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+            }
+
+            foreach (GameObject obj in m_throwerGameModeRules)
+            {
+                obj.SetActive(m_gameMode.CurrentGameMode == GameModeFlag.Thrower);
+            }
         }
     }
 }
