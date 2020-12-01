@@ -8,21 +8,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using Unity.LEGO.Game;
 
 namespace LegoDodgeBall
 {
     public class DodgeballPlayerController : MonoBehaviour
     {
         [SerializeField] private GameMode m_gameMode;
+        [SerializeField] private Transform m_throwerCrosshair;
+
+        [Space(10)]
         [SerializeField] private List<Transform> m_throwerSpawnPoints;
         [SerializeField] private List<Transform> m_dodgerSpawnPoints;
 
         [Space(10)]
-        [SerializeField] private Vector3 m_cameraOffset = Vector3.zero;
+        [SerializeField] private Vector3 m_cameraPositionOffset = Vector3.zero;
 
         private CinemachineFreeLook m_FreeLookCamera;
         private Camera m_mainCamera;
         private Transform m_chosenSpawnPoint;
+        private float m_sensitivity = 1.0f;
 
         protected void Awake()
         {
@@ -33,15 +38,38 @@ namespace LegoDodgeBall
             }
 
             this.SetupPlayerPosition();
+            this.SetupCrosshair();
             this.SetupCamera();
-            Debug.Log("setup camera pos...");
             this.SetupCameraPosition();
+
+            this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+
+            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
+            EventManager.AddListener<OptionsMenuEvent>(OnOptionsMenu);
         }
 
-        // protected void LateUpdate()
-        // {
-        //     this.SetupCameraPosition();
-        // }
+        protected void OnDestroy()
+        {
+            EventManager.RemoveListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
+            EventManager.RemoveListener<OptionsMenuEvent>(OnOptionsMenu);
+        }
+
+        protected void Update()
+        {
+            /*
+            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+           
+            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+           
+            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            */
+        }
+
+        protected void LateUpdate()
+        {
+            this.SetupCameraPosition();
+        }
 
         #region Private Functions
 
@@ -91,23 +119,43 @@ namespace LegoDodgeBall
 
         private void SetupCameraPosition()
         {
-            Debug.Log("setup camera pos...");
-            Vector3 cameraPosition = m_mainCamera.transform.localPosition;
-            cameraPosition.x += m_mainCamera.transform.right.x + m_cameraOffset.x;
-            cameraPosition.y += m_mainCamera.transform.up.y + m_cameraOffset.y;
-            cameraPosition.z += m_mainCamera.transform.forward.z + m_cameraOffset.z;
-
-            // Debug.Log("right: " + m_mainCamera.transform.right + ", up: " + m_mainCamera.transform.up + ", forward: " + m_mainCamera.transform.forward);
 
             m_mainCamera.transform.rotation = this.transform.rotation;
+
+            Vector3 cameraPosition = Vector3.zero;
+            cameraPosition.x += m_mainCamera.transform.right.x + m_cameraPositionOffset.x;
+            cameraPosition.y += m_mainCamera.transform.up.y + m_cameraPositionOffset.y;
+            cameraPosition.z += m_mainCamera.transform.forward.z + m_cameraPositionOffset.z;
             m_mainCamera.transform.localPosition = cameraPosition;
-            // m_mainCamera.transform.localPosition = (m_mainCamera.transform.right) * m_cameraOffset.x;
-            // m_mainCamera.transform.localPosition += (m_mainCamera.transform.up) * m_cameraOffset.y;
-            // m_mainCamera.transform.localPosition += (m_mainCamera.transform.forward) * m_cameraOffset.z;
-            Debug.Log("local pos: " + m_mainCamera.transform.localPosition);
-            //m_mainCamera.transform.position = cameraPosition; //this.transform.position + m_cameraOffset;
-            //m_mainCamera.transform.forward = this.transform.forward;
-            // playerPosition.z 
+        }
+
+        private void SetupCrosshair()
+        {
+            if (m_gameMode.CurrentGameMode != GameModeFlag.Thrower || !m_throwerCrosshair)
+            {
+                return;
+            }
+
+            m_throwerCrosshair.rotation = this.transform.rotation;
+
+            Vector3 crosshairPosition = this.transform.position;
+            crosshairPosition += this.transform.forward * 50;
+            crosshairPosition.y += 1;
+            m_throwerCrosshair.position = crosshairPosition;
+        }
+
+        private void ShowCursor(bool visible)
+        {
+            Cursor.visible = visible;
+
+            if (visible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
 
         private void LoadPositionFromList(List<Transform> spawnPoints)
@@ -128,6 +176,20 @@ namespace LegoDodgeBall
 
             this.transform.position = randomPosition;
             this.transform.LookAt(targetPosition);
+        }
+
+        #endregion
+
+        #region Broadcast Events
+
+        void OnOptionsMenu(OptionsMenuEvent evt)
+        {
+            this.ShowCursor(evt.Active);
+        }
+
+        void OnLookSensitivityUpdate(LookSensitivityUpdateEvent evt)
+        {
+            m_sensitivity = evt.Value;
         }
 
         #endregion
