@@ -28,6 +28,7 @@ namespace LegoDodgeBall
         private Camera m_mainCamera;
         private Transform m_chosenSpawnPoint;
         private float m_sensitivity = 1.0f;
+        private float m_rotationY = 0.0f;
 
         protected void Awake()
         {
@@ -56,20 +57,20 @@ namespace LegoDodgeBall
 
         protected void Update()
         {
+            float rotationX = m_chosenSpawnPoint.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity * 0.5f;
+            m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity * 0.25f;
             /*
-            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
-           
-            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
             rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-           
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
             */
+
+            m_chosenSpawnPoint.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
+            //m_mainCamera.transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
         }
 
-        protected void LateUpdate()
-        {
-            this.SetupCameraPosition();
-        }
+        // protected void LateUpdate()
+        // {
+        //     this.SetupCameraPosition();
+        // }
 
         #region Private Functions
 
