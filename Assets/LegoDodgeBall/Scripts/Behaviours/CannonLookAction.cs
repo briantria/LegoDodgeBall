@@ -18,12 +18,9 @@ namespace LegoDodgeBall
     {
         [SerializeField] private GameMode m_gameMode;
 
-        private float m_sensitivity = 1.0f;
-
         override protected void Awake()
         {
             base.Awake();
-            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
         }
 
         override protected void Start()
@@ -49,21 +46,11 @@ namespace LegoDodgeBall
         override protected void OnDestroy()
         {
             base.OnDestroy();
-            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
         }
 
         private void MouseLookAt()
         {
             m_MovementTracker.UpdateModelPosition();
         }
-
-        #region Broadcast Events
-
-        void OnLookSensitivityUpdate(LookSensitivityUpdateEvent evt)
-        {
-            m_sensitivity = evt.Value;
-        }
-
-        #endregion
     }
 }

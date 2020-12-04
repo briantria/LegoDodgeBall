@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using Unity.LEGO.Game;
+using Unity.LEGO.Behaviours;
 
 namespace LegoDodgeBall
 {
@@ -30,6 +31,8 @@ namespace LegoDodgeBall
         private float m_sensitivity = 1.0f;
         private float m_rotationY = 0.0f;
 
+        private MinifigInputManager m_miniFigController;
+
         protected void Awake()
         {
             if (!m_gameMode)
@@ -37,6 +40,8 @@ namespace LegoDodgeBall
                 Debug.LogError("Missing game mode reference.");
                 return;
             }
+
+            m_miniFigController = this.GetComponent<MinifigInputManager>();
 
             this.SetupPlayerPosition();
             this.SetupCrosshair();
@@ -76,6 +81,7 @@ namespace LegoDodgeBall
                     break;
 
                 default:
+                    m_miniFigController.enabled = false;
                     this.LoadPositionFromList(m_throwerSpawnPoints);
                     break;
             }
