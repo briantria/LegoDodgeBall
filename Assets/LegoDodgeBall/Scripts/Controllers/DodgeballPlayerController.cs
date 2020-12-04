@@ -28,8 +28,8 @@ namespace LegoDodgeBall
         private CinemachineFreeLook m_FreeLookCamera;
         private Camera m_mainCamera;
         private Transform m_chosenSpawnPoint;
-        private float m_sensitivity = 1.0f;
-        private float m_rotationY = 0.0f;
+        // private float m_sensitivity = 1.0f;
+        // private float m_rotationY = 0.0f;
 
         private MinifigInputManager m_miniFigController;
 
@@ -50,25 +50,25 @@ namespace LegoDodgeBall
 
             this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
 
-            EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
+            // EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
             EventManager.AddListener<OptionsMenuEvent>(OnOptionsMenu);
         }
 
         protected void OnDestroy()
         {
             this.ShowCursor(true);
-            EventManager.RemoveListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
+            // EventManager.RemoveListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
             EventManager.RemoveListener<OptionsMenuEvent>(OnOptionsMenu);
         }
 
-        protected void Update()
-        {
-            float rotationX = m_chosenSpawnPoint.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity * 0.5f;
-            m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity * 0.25f;
+        // protected void Update()
+        // {
+        //     float rotationX = m_chosenSpawnPoint.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity * 0.5f;
+        //     m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity * 0.25f;
 
-            m_chosenSpawnPoint.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
-            //m_mainCamera.transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
-        }
+        //     m_chosenSpawnPoint.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
+        //     //m_mainCamera.transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
+        // }
 
         #region Private Functions
 
@@ -187,10 +187,10 @@ namespace LegoDodgeBall
             this.ShowCursor(evt.Active);
         }
 
-        void OnLookSensitivityUpdate(LookSensitivityUpdateEvent evt)
-        {
-            m_sensitivity = evt.Value;
-        }
+        // void OnLookSensitivityUpdate(LookSensitivityUpdateEvent evt)
+        // {
+        //     m_sensitivity = evt.Value;
+        // }
 
         #endregion
     }
