@@ -7,6 +7,8 @@ TagManager:
   - Projectile
   - TutorialRequirement
   - PickUpSpawnPoint
+  - DodgeBot
+  - ThrowBot
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Player
   - Hazard
   - Environment
-  - 
+  - Bot
   - 
   - 
   - 
