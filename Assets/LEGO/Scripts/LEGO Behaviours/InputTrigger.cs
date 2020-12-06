@@ -98,7 +98,7 @@ namespace Unity.LEGO.Behaviours.Triggers
                 if (m_Enable != Enable.Always)
                 {
                     // Apply the correct sensing, given when to enable the input.
-                    switch(m_Enable)
+                    switch (m_Enable)
                     {
                         case Enable.WhenPlayerIsNearby:
                             {
@@ -195,7 +195,7 @@ namespace Unity.LEGO.Behaviours.Triggers
                     break;
             }
 
-            return false;   
+            return false;
         }
 
         void SetupPrompt()
@@ -207,7 +207,7 @@ namespace Unity.LEGO.Behaviours.Triggers
             {
                 var inputTriggers = brick.GetComponents<InputTrigger>();
 
-                foreach(var inputTrigger in inputTriggers)
+                foreach (var inputTrigger in inputTriggers)
                 {
                     if (inputTrigger.m_InputPrompt)
                     {
@@ -224,7 +224,7 @@ namespace Unity.LEGO.Behaviours.Triggers
                 var promptPosition = new Vector3(boundsCenter.x,
                     boundsCenter.y + m_ScopedBounds.extents.y + k_PromptHeight, boundsCenter.z);
 
-                GameObject go  = Instantiate(m_InputPromptPrefab, promptPosition, Quaternion.identity, transform);
+                GameObject go = Instantiate(m_InputPromptPrefab, promptPosition, Quaternion.identity, transform);
                 m_InputPrompt = go.GetComponent<InputPrompt>();
             }
 
