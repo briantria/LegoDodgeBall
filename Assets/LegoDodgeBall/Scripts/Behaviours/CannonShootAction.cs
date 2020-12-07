@@ -36,8 +36,6 @@ namespace LegoDodgeBall
 
         protected void Update()
         {
-            Debug.Log("test");
-
             if (CheckInput())
             {
                 // ConditionMet();
@@ -60,7 +58,6 @@ namespace LegoDodgeBall
             Projectile projectile = projectileObj.GetComponent<Projectile>();
             if (projectile)
             {
-                Debug.Log("FIRE!");
                 projectile.Init(m_ScopedBricks, m_Velocity, m_UseGravity, m_Lifetime);
             }
 
@@ -70,7 +67,6 @@ namespace LegoDodgeBall
         bool CheckInput()
         {
             bool didFire = Input.GetButtonDown("Fire1");
-            Debug.Log("Did fire? " + didFire);
             return didFire;
         }
     }

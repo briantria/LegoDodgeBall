@@ -9,6 +9,7 @@ TagManager:
   - PickUpSpawnPoint
   - DodgeBot
   - ThrowBot
+  - DodgeBallProjectile
   layers:
   - Default
   - TransparentFX

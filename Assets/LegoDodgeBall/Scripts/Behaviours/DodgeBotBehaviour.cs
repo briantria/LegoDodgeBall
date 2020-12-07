@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.LEGO.Minifig;
+using Unity.LEGO.Behaviours;
 
 namespace LegoDodgeBall
 {
@@ -20,7 +21,7 @@ namespace LegoDodgeBall
         {
             m_minifigController = this.GetComponent<MinifigController>();
 
-            if (!m_minifigController)
+            if (m_minifigController)
             {
                 m_minifigController.SetInputEnabled(false);
             }
@@ -28,18 +29,38 @@ namespace LegoDodgeBall
 
         void Start()
         {
-            // m_nextMoveTarget = Random.insideUnitSphere * 20;
-            // m_nextMoveTarget.y = 0;
             ChooseAnotherPoint();
         }
 
-        void TurnBack()
+        void OnControllerColliderHit(ControllerColliderHit hit)
         {
-            m_minifigController.TurnTo(this.transform.forward * -1, 0, ChooseAnotherPoint);
+            if (hit.collider.CompareTag("DodgeBallProjectile"))
+            {
+                if (m_minifigController)
+                {
+                    m_minifigController.Explode();
+                }
+            }
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("DodgeBallProjectile"))
+            {
+                if (m_minifigController)
+                {
+                    m_minifigController.Explode();
+                }
+            }
         }
 
         void ChooseAnotherPoint()
         {
+            if (!m_minifigController)
+            {
+                return;
+            }
+
             m_nextMoveTarget = Random.insideUnitSphere * 20;
             m_nextMoveTarget.y = 0;
             m_minifigController.TurnTo(m_nextMoveTarget, 0, GoToMoveTarget, 0);
@@ -47,6 +68,11 @@ namespace LegoDodgeBall
 
         void GoToMoveTarget()
         {
+            if (!m_minifigController)
+            {
+                return;
+            }
+
             m_minifigController.MoveTo(m_nextMoveTarget, 0, ChooseAnotherPoint, Random.Range(0, 3));
         }
 
