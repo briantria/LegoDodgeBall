@@ -15,11 +15,24 @@ namespace LegoDodgeBall
     public class DodgeBotBehaviour : MonoBehaviour
     {
         private MinifigController m_minifigController;
+        private CharacterController m_controller;
+        private Animator m_animator;
+
         private Vector3 m_nextMoveTarget;
+        private Vector3 m_moveDelta = Vector3.zero;
+        private bool m_airborne = false;
+        private bool m_didJump = false;
+
+        int m_jumpHash = Animator.StringToHash("Jump");
+        int m_groundedHash = Animator.StringToHash("Grounded");
+
+        #region Life Cycle
 
         void Awake()
         {
             m_minifigController = this.GetComponent<MinifigController>();
+            m_animator = this.GetComponent<Animator>();
+            m_controller = this.GetComponent<CharacterController>();
 
             if (m_minifigController)
             {
@@ -30,6 +43,11 @@ namespace LegoDodgeBall
         void Start()
         {
             ChooseAnotherPoint();
+        }
+
+        void Update()
+        {
+            this.Jump();
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit)
@@ -54,6 +72,10 @@ namespace LegoDodgeBall
             }
         }
 
+        #endregion
+
+        #region Private Functions
+
         void ChooseAnotherPoint()
         {
             if (!m_minifigController)
@@ -73,12 +95,38 @@ namespace LegoDodgeBall
                 return;
             }
 
+            m_didJump = true;
             m_minifigController.MoveTo(m_nextMoveTarget, 0, ChooseAnotherPoint, Random.Range(0, 3));
         }
 
-        // void Update()
-        // {
-        //     m_minifigController.
-        // }
+        void Jump()
+        {
+            if (m_airborne)
+            {
+                m_moveDelta.y -= m_minifigController.gravity * Time.deltaTime;
+
+                // TODO: double jump
+            }
+
+            if (m_controller.isGrounded && m_didJump)
+            {
+                m_airborne = true;
+                m_didJump = false;
+                m_moveDelta.y = m_minifigController.jumpSpeed;
+                m_animator.SetTrigger(m_jumpHash);
+            }
+
+            if (this.gameObject.activeInHierarchy)
+            {
+                m_controller.Move(m_moveDelta * Time.deltaTime);
+
+                if (m_controller.isGrounded)
+                {
+                    m_airborne = false;
+                }
+            }
+        }
+
+        #endregion
     }
 }
