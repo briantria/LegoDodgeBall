@@ -22,6 +22,8 @@ namespace LegoDodgeBall
         private Vector3 m_moveDelta = Vector3.zero;
         private bool m_airborne = false;
         private bool m_didJump = false;
+        private bool m_didDoubleJump = false;
+        private float m_gravityEffectDelay = 0.0f;
 
         int m_jumpHash = Animator.StringToHash("Jump");
         int m_groundedHash = Animator.StringToHash("Grounded");
@@ -101,28 +103,41 @@ namespace LegoDodgeBall
 
         void Jump()
         {
-            if (m_airborne)
+            if (!m_controller.isGrounded && m_gravityEffectDelay <= 0.01f)
             {
-                m_moveDelta.y -= m_minifigController.gravity * Time.deltaTime;
-
-                // TODO: double jump
+                if (!m_didDoubleJump)
+                {
+                    m_didDoubleJump = true;
+                    m_gravityEffectDelay = 0.5f;
+                    m_moveDelta.y += m_minifigController.jumpSpeed;
+                    m_animator.SetTrigger(m_jumpHash);
+                }
+                else
+                {
+                    m_moveDelta.y -= m_minifigController.gravity * Time.deltaTime;
+                }
             }
 
             if (m_controller.isGrounded && m_didJump)
             {
+                m_didDoubleJump = false;
                 m_airborne = true;
                 m_didJump = false;
+                m_gravityEffectDelay = 0.5f;
                 m_moveDelta.y = m_minifigController.jumpSpeed;
                 m_animator.SetTrigger(m_jumpHash);
             }
 
             if (this.gameObject.activeInHierarchy)
             {
+                m_gravityEffectDelay -= Time.deltaTime;
                 m_controller.Move(m_moveDelta * Time.deltaTime);
 
                 if (m_controller.isGrounded)
                 {
+                    m_animator.SetTrigger(m_groundedHash);
                     m_airborne = false;
+                    m_moveDelta.y = 0;
                 }
             }
         }
