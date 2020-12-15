@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f84711234482149bf4dcff41ef5e8f, type: 3}
   m_Name: GameMode
   m_EditorClassIdentifier: 
-  CurrentGameMode: 0
+  CurrentGameMode: 1
   PickupGoal: 100
   TimeLimit: 120
