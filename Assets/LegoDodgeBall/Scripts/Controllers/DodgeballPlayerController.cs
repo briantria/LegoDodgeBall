@@ -51,7 +51,8 @@ namespace LegoDodgeBall
             this.SetupCamera();
             this.SetupCameraPosition();
 
-            this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+            // this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+            this.ShowCursor(false);
 
             // EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
             EventManager.AddListener<OptionsMenuEvent>(OnOptionsMenu);
