@@ -14,6 +14,9 @@ namespace LegoDodgeBall
 {
     public class DodgeBotBehaviour : MonoBehaviour
     {
+        public delegate void DodgeBotAction();
+        public static event DodgeBotAction OnExplode;
+
         private MinifigController m_minifigController;
         private CharacterController m_controller;
         private Animator m_animator;
@@ -56,6 +59,8 @@ namespace LegoDodgeBall
         {
             if (hit.collider.CompareTag("DodgeBallProjectile"))
             {
+                OnExplode();
+
                 if (m_minifigController)
                 {
                     m_minifigController.Explode();
@@ -67,6 +72,8 @@ namespace LegoDodgeBall
         {
             if (collision.gameObject.CompareTag("DodgeBallProjectile"))
             {
+                OnExplode();
+
                 if (m_minifigController)
                 {
                     m_minifigController.Explode();

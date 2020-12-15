@@ -35,7 +35,7 @@ namespace LegoDodgeBall
 
         private MinifigInputManager m_minifigInputManager;
 
-        protected void Awake()
+        protected void Start()
         {
             if (!m_gameMode)
             {
