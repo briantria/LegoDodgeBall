@@ -10,6 +10,7 @@ using Cinemachine;
 using UnityEngine;
 using Unity.LEGO.Game;
 using Unity.LEGO.Behaviours;
+using Unity.LEGO.Minifig;
 
 namespace LegoDodgeBall
 {
@@ -25,15 +26,16 @@ namespace LegoDodgeBall
         [Space(10)]
         [SerializeField] private Vector3 m_cameraPositionOffset = Vector3.zero;
 
+        private MinifigController m_minifigController;
         private CinemachineFreeLook m_FreeLookCamera;
         private Camera m_mainCamera;
         private Transform m_chosenSpawnPoint;
         // private float m_sensitivity = 1.0f;
         // private float m_rotationY = 0.0f;
 
-        private MinifigInputManager m_miniFigController;
+        private MinifigInputManager m_minifigInputManager;
 
-        protected void Awake()
+        protected void Start()
         {
             if (!m_gameMode)
             {
@@ -41,14 +43,16 @@ namespace LegoDodgeBall
                 return;
             }
 
-            m_miniFigController = this.GetComponent<MinifigInputManager>();
+            m_minifigInputManager = this.GetComponent<MinifigInputManager>();
+            m_minifigController = this.GetComponent<MinifigController>();
 
             this.SetupPlayerPosition();
             this.SetupCrosshair();
             this.SetupCamera();
             this.SetupCameraPosition();
 
-            this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+            // this.ShowCursor(m_gameMode.CurrentGameMode == GameModeFlag.Dodger);
+            this.ShowCursor(false);
 
             // EventManager.AddListener<LookSensitivityUpdateEvent>(OnLookSensitivityUpdate);
             EventManager.AddListener<OptionsMenuEvent>(OnOptionsMenu);
@@ -81,7 +85,8 @@ namespace LegoDodgeBall
                     break;
 
                 default:
-                    m_miniFigController.enabled = false;
+                    m_minifigInputManager.enabled = false;
+                    m_minifigController.SetInputEnabled(false);
                     this.LoadPositionFromList(m_throwerSpawnPoints);
                     break;
             }

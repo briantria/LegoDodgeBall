@@ -91,11 +91,12 @@ namespace LegoDodgeBall
             }
 
             pickup.OnCollected -= this.PickupCollected;
-            StartCoroutine(this.Respawn(pickup, 2));
+            StartCoroutine(this.Respawn(pickup, Random.Range(2.0f, 10.0f)));
         }
 
         public IEnumerator Respawn(PickupAction pickup, float t)
         {
+            // Debug.Log("respawn in " + t + " seconds...");
             GameObject pickupGameObject = pickup.transform.parent.gameObject;
             Vector3 spawnPoint = pickupGameObject.transform.position;
             //Destroy(pickupGameObject);
